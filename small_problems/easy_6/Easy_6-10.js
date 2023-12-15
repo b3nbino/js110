@@ -1,9 +1,21 @@
 function isBalanced(string) {
-  let lParArray = string.match(/\(/g) ?? [];
-  let rParArray = string.match(/\)/g) ?? [];
-  if (lParArray.length !== rParArray.length) {
+  let parArray = string.match(/\(|\)/g) ?? [];
+  let parCounter = 0;
+
+  //If a string has an odd number of parenthesis it must be unbalanced
+  if (parArray.length % 2 !== 0) {
     return false;
   }
+
+  //If there is one on the left, increase the counter, then decrease if it has one corresponding to it
+  for (let i = 0; i < parArray.length; i++) {
+    if (parArray[i] === "(") {
+      parCounter += 1;
+    } else if (parCounter > 0 && parArray[i] === ")") {
+      parCounter -= 1;
+    }
+  }
+  return parCounter === 0;
 }
 
 console.log(isBalanced("What (is) this?") === true);
